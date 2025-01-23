@@ -50,52 +50,57 @@ public class BookingSeat {
 
                     switch (option.toLowerCase()){
                         case "y":
-                            System.out.print("Enter Chair number to booking: ");
+                            while (true){
+                                System.out.print("Enter Chair number to booking: ");
+                                String numSeatCon = scanner.next();
+                                message = Pattern.matches("\\d+\\d?", numSeatCon) ? "" : "Wrong input.";
+                                System.out.println(message);
 
-                            int numSeat = scanner.nextInt();
+                                if(message.isEmpty()){
+                                    int numSeat = Integer.parseInt(numSeatCon);
 
-                            if(numSeat < 1 || numSeat > bus.length){
-                                System.out.println("\nInvalid seat number. Please choose between 1 and " + bus.length + ".");
-                                break;
-                            }
+                                    if(numSeat < 1 || numSeat > bus.length){
+                                        System.out.println("\nInvalid seat number. Please choose between 1 and " + bus.length + ".");
+                                        break;
+                                    }
 
-                            System.out.print("\nDo you want to book seat " + numSeat + "? (Y/N): ");
-                            String confirmBooking = scanner.next();
-                            if (!confirmBooking.equalsIgnoreCase("y")) {
-                                System.out.println("Booking canceled.");
-                                break;  // Exit the booking process and prompt the user again
-                            }
+                                    System.out.print("\nDo you want to book seat " + numSeat + "? (Y/N): ");
+                                    String confirmBooking = scanner.next();
+                                    if (!confirmBooking.equalsIgnoreCase("y")) {
+                                        System.out.println("Booking canceled.");
+                                        break;
+                                    }
 
+                                    if(bus[numSeat - 1] == 0){
+                                        System.out.println("\nChair number " + numSeat + " is already booked.\n");
+                                    }else {
+                                        bus[numSeat - 1] = 0;
+                                        capacity -= 1;
+                                        booking += 1;
 
-                            if(bus[numSeat - 1] == 0){
-                                System.out.println("\nChair number " + numSeat + " is already booked.\n");
-                            }else {
-                                bus[numSeat - 1] = 0;
-                                capacity -= 1;
-                                booking += 1;
+                                        System.out.println("\nChair number " + numSeat + " has been booked successfully!");
 
-                                System.out.println("\nChair number " + numSeat + " has been booked successfully!");
-                            }
+                                    }
+                                    for(int i = 0; i < bus.length; i++){
 
-
-                            for(int i = 0; i < bus.length; i++){
-
-                                if(bus[i] == 0){
-                                    sign = "-";
-                                }else {
-                                    sign = "+";
+                                        if(bus[i] == 0){
+                                            sign = "-";
+                                        }else {
+                                            sign = "+";
+                                        }
+                                        if(i < 9){
+                                            System.out.print("(" + sign+ ") 0" + (i+1) + " \t");
+                                        }else{
+                                            System.out.print("(" + sign+ ") " + (i+1) + " \t");
+                                        }
+                                        if(i % 5 == 4){
+                                            System.out.println("");
+                                        }
+                                    }
+                                    System.out.println("\n( - ) : Unavailable( " + booking + " ) \t" + "( + ) : Unavailable( " + capacity + " )");
+                                    break;
                                 }
-                                if(i < 9){
-                                    System.out.print("(" + sign+ ") 0" + (i+1) + " \t");
-                                }else{
-                                    System.out.print("(" + sign+ ") " + (i+1) + " \t");
-                                }
-                                if(i % 5 == 4){
-                                    System.out.println("");
-                                }
                             }
-
-                            System.out.println("\n( - ) : Unavailable( " + booking + " ) \t" + "( + ) : Unavailable( " + capacity + " )");
                             break;
                         case "n":
                             System.out.println("Thank you! Good luck! ");
