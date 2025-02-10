@@ -62,10 +62,7 @@ public class Main {
                                 if (!bankService.checkingAccountCount){
                                     System.out.println(red + "Checking Account haven't been created yet!!!\n" + reset);
                                 }else {
-                                    System.out.print("Enter money to deposit: ");
-                                    int amount = new Scanner(System.in).nextInt();
-//                                    String money = new Scanner(System.in).nextLine();
-//                                    bankService.verifyMoney(money);
+                                    int amount = bankService.verifyMoney("Deposit");
                                     account.deposit(amount);
                                 }
                             }
@@ -73,8 +70,7 @@ public class Main {
                                 if (!bankService.savingAccountCount){
                                     System.out.println(red + "Saving Account haven't been created yet!!!\n" + reset);
                                 }else {
-                                    System.out.print("Enter money to deposit: ");
-                                    int amount = new Scanner(System.in).nextInt();
+                                    int amount = bankService.verifyMoney("Deposit");
                                     account2.deposit(amount);
                                 }
                             }
@@ -95,8 +91,7 @@ public class Main {
                                 if (!bankService.checkingAccountCount){
                                     System.out.println(red + "Checking Account haven't been created yet!!!\n" + reset);
                                 }else {
-                                    System.out.print("Enter money to withdraw: ");
-                                    int amount = new Scanner(System.in).nextInt();
+                                    int amount = bankService.verifyMoney("Withdraw");
                                     account.withdraw(amount);
                                 }
                             }
@@ -104,8 +99,7 @@ public class Main {
                                 if (!bankService.savingAccountCount){
                                     System.out.println(red + "Saving Account haven't been created yet!!!\n" + reset);
                                 }else {
-                                    System.out.print("Enter money to withdraw: ");
-                                    int amount = new Scanner(System.in).nextInt();
+                                    int amount = bankService.verifyMoney("Withdraw");
                                     account2.withdraw(amount);
                                 }
                             }
@@ -128,13 +122,11 @@ public class Main {
                             System.out.println("==========================================================");
                             switch (bankService.option()){
                                 case "1" -> {
-                                    System.out.print("Enter money to transfer: ");
-                                    int amount = new Scanner(System.in).nextInt();
+                                    int amount = bankService.verifyMoney("Transfer");
                                     account.transfer(amount,account2);
                                 }
                                 case "2" -> {
-                                    System.out.print("Enter money to transfer: ");
-                                    int amount = new Scanner(System.in).nextInt();
+                                    int amount = bankService.verifyMoney("Transfer");
                                     account2.transfer(amount,account);
                                 }
                                 case "3" -> {
@@ -166,16 +158,21 @@ public class Main {
                                     if (!bankService.checkingAccountCount){
                                         System.out.println(red + "Checking Account haven't been created yet!!!\n" + reset);
                                     }else {
-                                        account = bankService.deleteCheckingAccount(account,account2);
-                                        break label;
+                                        if (bankService.confirm().equals("y")){
+                                            account = bankService.deleteCheckingAccount(account,account2);
+                                            break label;
+                                        }else if (bankService.confirm().equals("n")){
+                                            break label;
+                                        }
                                     }
                                 }
                                 case "2" -> {
                                     if (!bankService.savingAccountCount){
                                         System.out.println(red + "Saving Account haven't been created yet!!!\n" + reset);
                                     }else {
-                                        account2 = bankService.deleteSavingAccount(account2,account);
-                                        break label;
+                                        if (bankService.confirm().equals("y")){
+                                            account2 = bankService.deleteSavingAccount(account2,account);
+                                        }
                                     }
                                 }
                                 case "3" -> {

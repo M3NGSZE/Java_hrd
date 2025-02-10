@@ -164,15 +164,28 @@ public class BankService {
         }
     }
 
-    public int verifyMoney(String regex){
+    public int verifyMoney(String option){
         while (true){
-            boolean matches = Pattern.matches("^\\d+$\n", regex);
+            System.out.print("Enter money to "+option+": ");
+            String money = new Scanner(System.in).nextLine();
+            boolean matches = Pattern.matches("^\\d+$", money);
             if (matches){
-                return Integer.parseInt(regex);
+                return Integer.parseInt(money);
             }
             System.out.println(red + "Money can't be letter or space" + reset);
-            System.out.print("Enter money to deposit: ");
-            regex = new Scanner(System.in).nextLine();
+
+        }
+    }
+
+    public String confirm(){
+        while (true){
+            System.out.print("Are you sure you want to delete this account? (Y/N): ");
+            String confirm = new Scanner(System.in).nextLine();
+            boolean matches = Pattern.matches("^^[yYnN]$", confirm);
+            if (matches){
+                return confirm.toLowerCase();
+            }
+            System.out.println(red + "Wrong input. Please input only yes(y/Y) or no(n/N)." + reset);
         }
     }
 

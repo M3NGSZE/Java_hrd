@@ -13,10 +13,10 @@ public class TestRegex {
 //        System.out.println(min + (int)(Math.random() * ((max - min) + 1)));
 //        System.out.println(min + (int)(Math.random() * ((max - min) + 1)));
 
-        Random random = new Random();
-        int number = random.nextInt(999999999)+1;
-//                                            184322576
-        System.out.println(number);
+//        Random random = new Random();
+//        int number = random.nextInt(999999999)+1;
+////                                            184322576
+//        System.out.println(number);
 
 //        boolean matches = Pattern.matches("^[1-9a-zA-Z]\\w*$", "123213asfsadf");
 //        boolean matches = Pattern.matches("^\\d+$", " \n"); // ✅ True
@@ -33,6 +33,9 @@ public class TestRegex {
 //
 //
 //        System.out.println(matches);
+
+        boolean matches = Pattern.matches("^\\d+$", " 12312");
+        System.out.println(matches);
 
     }
 }
