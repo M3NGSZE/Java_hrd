@@ -4,7 +4,7 @@ import java.util.regex.Pattern;
 
 public class BankService {
     Scanner scanner = new Scanner(System.in);
-    String red = "\u001B[31m", green = "\u001B[32m", reset = "\u001B[0m"; //yellow = "\u001B[33m";
+    String red = "\u001B[31m", green = "\u001B[32m", reset = "\u001B[0m",yellow = "\u001B[33m", cyan = "\u001B[36m", purple = "\u001B[35m";
     String[] strDOB;
     int[] intDOB;
     boolean checkingAccountCount = false, savingAccountCount = false;
@@ -55,7 +55,6 @@ public class BankService {
         System.out.println("=============================================================");
         System.out.println(green + "Your saving account has been created successfully!" + reset);
         savingAccountCount = true;
-//        beforeCheckingAccount = true;
         return savingAccount;
     }
 
@@ -163,6 +162,61 @@ public class BankService {
             }
             emptyString(); //System.out.print(red + "Phone number length can't be greater 10 or smaller 9 and check ");
         }
+    }
+
+    public int verifyMoney(String regex){
+        while (true){
+            boolean matches = Pattern.matches("^\\d+$\n", regex);
+            if (matches){
+                return Integer.parseInt(regex);
+            }
+            System.out.println(red + "Money can't be letter or space" + reset);
+            System.out.print("Enter money to deposit: ");
+            regex = new Scanner(System.in).nextLine();
+        }
+    }
+
+    public CheckingAccount deleteCheckingAccount(Account source, Account targetAccount){
+
+        CheckingAccount checkingAccount = (CheckingAccount) source;
+        SavingAccount savingAccount = (SavingAccount) targetAccount;
+
+        System.out.println(yellow + "\n>>>>>>>>>>>>>>>>>>>> Checking Account <<<<<<<<<<<<<<<<<<<<" + reset);
+        System.out.println("Transferred                   : " + cyan + " \t\t\t$ " + checkingAccount.getBalance() + reset);
+        System.out.println("From Checking Account with ID : " + cyan + " \t\t\t"  +  checkingAccount.getAccountNumber() + reset);
+        System.out.println("To Saving account with ID     : " + cyan + " \t\t\t"  + savingAccount.getAccountNumber() + reset);
+        System.out.println("Total Remain                  : " + cyan + " \t\t\t$ " + "0.0" + reset);
+        CheckingAccount checkingAccount1 = new SavingAccount();
+        savingAccount.setBalance(savingAccount.getBalance() + checkingAccount.getBalance());
+        System.out.println(yellow + "\n\t\t\tSaving Account\n" + reset);
+        System.out.println("Received    \t: " + purple + " \t\t\t$" + checkingAccount.getBalance() + reset);
+        System.out.println("Total Amount\t: " + purple + " \t\t\t$" +  savingAccount.getBalance() + reset);
+        System.out.println("=============================================================");
+        checkingAccountCount = false;
+        System.out.println(green + "Transferred all balance from Checking account to Saving account." + reset);
+        System.out.println(green + "Account deleted successfully" + reset);
+        return checkingAccount1;
+    }
+
+    public CheckingAccount deleteSavingAccount(Account source, Account targetAccount){
+        SavingAccount savingAccount = (SavingAccount) source;
+        CheckingAccount checkingAccount = (CheckingAccount) targetAccount;
+
+        System.out.println(yellow + "\n>>>>>>>>>>>>>>>>>>>> Saving Account <<<<<<<<<<<<<<<<<<<<" + reset);
+        System.out.println("Transferred                   : " + cyan + " \t\t\t$ " + savingAccount.getBalance() + reset);
+        System.out.println("From Checking Account with ID : " + cyan + " \t\t\t"  +  savingAccount.getAccountNumber() + reset);
+        System.out.println("To Saving account with ID     : " + cyan + " \t\t\t"  + checkingAccount.getAccountNumber() + reset);
+        System.out.println("Total Remain                  : " + cyan + " \t\t\t$ " + "0.0" + reset);
+        SavingAccount savingAccount1 =  new SavingAccount();
+        checkingAccount.setBalance(savingAccount.getBalance() + checkingAccount.getBalance());
+        System.out.println(yellow + "\n\t\t\tChecking Account\n" + reset);
+        System.out.println("Received    \t: " + purple + " \t\t\t$" + savingAccount.getBalance() + reset);
+        System.out.println("Total Amount\t: " + purple + " \t\t\t$" +  checkingAccount.getBalance() + reset);
+        System.out.println("=============================================================");
+        savingAccountCount = false;
+        System.out.println(green + "Transferred all balance from Saving account to Checking account." + reset);
+        System.out.println(green + "Account deleted successfully" + reset);
+        return savingAccount1;
     }
 
 }

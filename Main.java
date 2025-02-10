@@ -64,6 +64,8 @@ public class Main {
                                 }else {
                                     System.out.print("Enter money to deposit: ");
                                     int amount = new Scanner(System.in).nextInt();
+//                                    String money = new Scanner(System.in).nextLine();
+//                                    bankService.verifyMoney(money);
                                     account.deposit(amount);
                                 }
                             }
@@ -147,10 +149,47 @@ public class Main {
                     }
                 }
                 case "5" -> {
-                    account.displayAccountInfo();
-                    account2.displayAccountInfo();
+                    if ((bankService.checkingAccountCount) || (bankService.savingAccountCount)){
+                        account.displayAccountInfo();
+                        account2.displayAccountInfo();
+                    }else {
+                        System.out.println(red + "Checking Account or Saving Account haven't been created yet!!!\n" + reset);
+                    }
                 }
-                case "6" -> System.out.println("6. Delete Account");
+                case "6" -> {
+                    if ((bankService.checkingAccountCount) && (bankService.savingAccountCount)){
+                        label:
+                        while (true){
+                            bankService.checkingSaving("Delete");
+                            switch (bankService.option()){
+                                case "1" -> {
+                                    if (!bankService.checkingAccountCount){
+                                        System.out.println(red + "Checking Account haven't been created yet!!!\n" + reset);
+                                    }else {
+                                        account = bankService.deleteCheckingAccount(account,account2);
+                                        break label;
+                                    }
+                                }
+                                case "2" -> {
+                                    if (!bankService.savingAccountCount){
+                                        System.out.println(red + "Saving Account haven't been created yet!!!\n" + reset);
+                                    }else {
+                                        account2 = bankService.deleteSavingAccount(account2,account);
+                                        break label;
+                                    }
+                                }
+                                case "3" -> {
+                                    System.out.println();
+                                    break label;
+                                }
+                                default -> System.out.println(red + "Invalid option! Please try again ...\n" + reset);
+                            }
+                        }
+                    }else {
+                        System.out.println(red + "At least one account must remain\n" + reset);
+                    }
+
+                }
                 case "7" -> {
                     System.out.println(green + "\n(^-^) Good Bye! (^-^)" + reset);
                     return;

@@ -5,7 +5,7 @@ public class CheckingAccount implements Account{
     private String gender;
     private String phone;
     private double balance;
-    private int counting = 0;
+    private int counting = 1;
     String red = "\u001B[31m", green = "\u001B[32m", reset = "\u001B[0m", yellow = "\u001B[33m", purple = "\u001B[35m", cyan = "\u001B[36m";
     public CheckingAccount(){
 
@@ -94,7 +94,7 @@ public class CheckingAccount implements Account{
             System.out.println(yellow + "\n\t\t\tChecking Account\n" + reset);
             System.out.println("Received    \t: " + purple + " \t\t\t$" + amount + reset);
             System.out.println("Total Amount\t: " + purple + " \t\t\t$" + getBalance() + reset);
-            System.out.println(green +"\nDeposit successful"+ reset);
+            System.out.println(green +"\nDeposit successfully"+ reset);
         }
     }
 
@@ -108,7 +108,7 @@ public class CheckingAccount implements Account{
             System.out.println(yellow + "\n\t\t\tWithdraw Account\n" + reset);
             System.out.println("Withdraw    \t: " + purple + " \t\t\t$" + amount + reset);
             System.out.println("Total Amount\t: " + purple + " \t\t\t$" + getBalance() + reset);
-            System.out.println(green +"\nWithdraw successful"+ reset);
+            System.out.println(green +"\nWithdraw successfully"+ reset);
         }
     }
 
@@ -121,13 +121,14 @@ public class CheckingAccount implements Account{
             setBalance(getBalance() - amount);
             SavingAccount.check = false;
             targetAccount.deposit(amount);
+            SavingAccount savingAccount = (SavingAccount) targetAccount;
             System.out.println(yellow + "\n>>>>>>>>>>>>>>>>>>>> Checking Account <<<<<<<<<<<<<<<<<<<<" + reset);
             System.out.println("Transferred                   : " + cyan + " \t\t\t$ " + amount + reset);
             System.out.println("From Checking Account with ID : " + cyan + " \t\t\t"  +  getAccountNumber() + reset);
-            System.out.println("To Saving account with ID     : " + cyan + " \t\t\t"  + ((SavingAccount) targetAccount).getAccountNumber() + reset);
+            System.out.println("To Saving account with ID     : " + cyan + " \t\t\t"  + savingAccount.getAccountNumber() + reset);
             System.out.println("Total Remain                  : " + cyan + " \t\t\t$ " + getBalance() + reset);
             System.out.println("=============================================================");
-            System.out.println(green +"Transfer successful"+ reset);
+            System.out.println(green +"Transfer successfully"+ reset);
         }
     }
 

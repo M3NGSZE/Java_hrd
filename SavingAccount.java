@@ -70,7 +70,7 @@ public class SavingAccount extends CheckingAccount implements Account{
             System.out.println(red + "Amount withdraw money must be greater than 0 and smaller or equal balance and please check your it might be empty" + reset);
         }else {
             if (amount >= (0.8 * getBalance())){
-                System.out.println(red + "Cannot transfer " + amount + " At least " + (getBalance() - (0.8 * getBalance())) + " must remain in the account." + reset);
+                System.out.println(red + "Cannot transfer $" + amount + " At least $" + (getBalance() - (0.8 * getBalance())) + " must remain in the account." + reset);
             }else {
                 double oldBalance = getBalance();
                 setBalance(oldBalance - amount);
@@ -89,16 +89,21 @@ public class SavingAccount extends CheckingAccount implements Account{
 //            System.out.println(red + "Not enough balance for transfer" + reset);
             System.out.println(red + "Amount withdraw money must be greater than 0 and smaller or equal balance and please check your it might be empty" + reset);
         }else {
-            setBalance(getBalance() - amount);
-            CheckingAccount.check1 = false;
-            targetAccount.deposit(amount);
-            System.out.println(yellow + "\n>>>>>>>>>>>>>>>>>>>> Checking Account <<<<<<<<<<<<<<<<<<<<" + reset);
-            System.out.println("Transferred                   : " + cyan + " \t\t\t$ " + amount + reset);
-            System.out.println("From Checking Account with ID : " + cyan + " \t\t\t"  +  getAccountNumber() + reset);
-            System.out.println("To Saving account with ID     : " + cyan + " \t\t\t"  + ((CheckingAccount) targetAccount).getAccountNumber() + reset);
-            System.out.println("Total Remain                  : " + cyan + " \t\t\t$ " + getBalance() + reset);
-            System.out.println("=============================================================");
-            System.out.println(green +"Transfer successful"+ reset);
+            if (amount >= (0.8 * getBalance())){
+                System.out.println(red + "Cannot transfer $" + amount + " At least $" + (getBalance() - (0.8 * getBalance())) + " must remain in the account." + reset);
+            }else {
+                setBalance(getBalance() - amount);
+                CheckingAccount.check1 = false;
+                targetAccount.deposit(amount);
+                CheckingAccount checkingAccount = (CheckingAccount) targetAccount;
+                System.out.println(yellow + "\n>>>>>>>>>>>>>>>>>>>> Checking Account <<<<<<<<<<<<<<<<<<<<" + reset);
+                System.out.println("Transferred                   : " + cyan + " \t\t\t$ " + amount + reset);
+                System.out.println("From Checking Account with ID : " + cyan + " \t\t\t"  +  getAccountNumber() + reset);
+                System.out.println("To Saving account with ID     : " + cyan + " \t\t\t"  + checkingAccount.getAccountNumber() + reset);
+                System.out.println("Total Remain                  : " + cyan + " \t\t\t$ " + getBalance() + reset);
+                System.out.println("=============================================================");
+                System.out.println(green +"Transfer successful"+ reset);
+            }
         }
     }
 
